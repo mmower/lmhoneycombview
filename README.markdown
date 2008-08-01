@@ -2,9 +2,11 @@ LMHoneycombView
 by Matt Mower <self@mattmower.com>
 http://matt.blogs.it/
 
-^Overview
+# Overview
 
 This control presents a honeycomb made up of interlocking columns of regular hexagons ("hex cells") that can be selected using the mouse.
+
+<div class="thumbnail"><a href="http://skitch.com/mattmower/1kps/window"><img src="http://img.skitch.com/20080801-pmtbgm8twr8i4i4753f3j2mhrd.preview.jpg" alt="Window" /></a><br /><span style="font-family: Lucida Grande, Trebuchet, sans-serif, Helvetica, Arial; font-size: 10px; color: #808080">Uploaded with <a href="http://plasq.com/">plasq</a>'s <a href="http://skitch.com">Skitch</a>!</span></div>
 
 The honeycomb view draws cell data from a dataSource that follows an included protocol and is quite flexile. The cell class provides basic drawing and can be extended to customise the appearance of cells.
 
@@ -12,7 +14,7 @@ I originally wrote this control as part of an application I am building. There w
 
 This control is released under the MIT license (see attached LICENSE file) and includes work .
 
-^How to use
+# How to use
 
 You'll need to build a working version of the control. This can either be done by building it as a framework and including it on your system, add the sources to your directly to your own application, or (as I do) building it as a private framework in your app. XCode is a bit annoying but you can make this work without too much trouble.
 
@@ -20,7 +22,7 @@ Once you have the framework just add an NSView object to your nib file and set t
 
 Selection events are dispatched to both the data model and any delegate of the view and include the selected hex cell. LMHexCell can hold a data object and can be subclassed to offer additional functionality.
 
-^Issues & follow-ups
+# Issues & follow-ups
 
 * This control was built from an app that uses Objective-C garbage collection and probably won't work without it. It's unlikely to be much work to make it a dual-framework but it's not important to me right now.
 
