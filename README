@@ -22,7 +22,11 @@ Selection events are dispatched to both the data model and any delegate of the v
 
 ^Issues & follow-ups
 
-* The major issue is to do with resizing. The control draws regular hexagons which are wider than they are tall this means that resizing the control can end up with either a lot of blank space or hexagons being "cut off". At this point I don't know of a means to constrain the aspect ratio of a specific control in a resizing operation - patches welcome!
+* This control was built from an app that uses Objective-C garbage collection and probably won't work without it. It's unlikely to be much work to make it a dual-framework but it's not important to me right now.
+
+* In my application the grid is 17 columns of 12 cells each. This control was originally not a discrete control but was extracted from the application. I duplicated the dimensions in the sample application and, now I look, it may be that assumptions about the dimensions are hardwired into the geometry. That needs to be fixed.
+
+* A pretty major issue is to do with resizing. The control draws regular hexagons which are wider than they are tall this means that resizing the control can end up with either a lot of blank space or hexagons being "cut off". At this point I don't know of a means to constrain the aspect ratio of a specific control in a resizing operation - patches welcome!
 
 * Drawing efficiency. The cells are responsible for drawing themself onto the view which is neat and allows cell classes to be customised to draw cells differently (e.g. to put text in them). At present the cell makes a number of calls back to the view to retrieve drawing related information such as border color, selected colour, border thickness and so on. Each of these calls is made for each cell. Passing this information in a struct would be a relatively simple optimisation.
 
