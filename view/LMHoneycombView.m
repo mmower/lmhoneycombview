@@ -114,35 +114,42 @@
   return ( 2 * [self bounds].size.width ) / ( 3 * ( cols + 1 ) );
 }
 
-- (CGFloat)hexOffset {
-  return ( 3 * [self hexRadius] ) / 2;
+/*
+ * We draw the hex using points on a circle, therefore we need to understand
+ * how far offset the centre of the first hex is from the edge of the view.
+ */
+- (CGFloat)hexOffset:(CGFloat)_radius {
+  return ( 3 * _radius ) / 2;
 }
 
-- (CGFloat)hexHeight {
-  return 2 * sqrt( 0.75 * pow( [self hexRadius], 2 ) );
+- (CGFloat)hexHeight:(CGFloat)_radius {
+  return 2 * sqrt( 0.75 * pow( _radius, 2 ) );
 }
 
-- (CGFloat)idealHeight {
-  return [self hexOffset] + ( rows * [self hexHeight] );
+- (CGFloat)idealHeight:(CGFloat)_radius {
+  return [self hexOffset:_radius] + ( rows * [self hexHeight:_radius] );
 }
 
 - (void)calculateCellPaths:(NSRect)__bounds {
   NSPoint hexCentre;
   
+  CGFloat radius = [self hexRadius];
+  CGFloat offset = [self hexOffset:radius];
+  CGFloat height = [self hexHeight:radius];
+  
   for( int col = 0; col < cols; col++ ) {
     for( int row = 0; row < rows; row ++ ) {
       hexCentre = NSMakePoint(
-                    [self hexOffset] + (col * ( (3 * [self hexRadius] ) / 2 ) ),
-                    [self hexOffset] + (row * [self hexHeight]) + ( col % 2 == 0 ? ([self hexHeight] / 2) : 0 )
+                    ( col + 1 ) * offset,
+                    offset + (row * height) + ( ( 1 - col % 2 ) * ( height / 2 ) )
                     );
       
-      [[dataSource hexCellAtColumn:col row:row] setHexCentre:hexCentre radius:[self hexRadius]];
+      [[dataSource hexCellAtColumn:col row:row] setHexCentre:hexCentre radius:radius];
     }
   }
 }
 
 - (void)drawRect:(NSRect)rect {
-  NSLog( @"drawing hexview" );
   if( firstDrawing ) {
     [self calculateCellPaths:[self bounds]];
     firstDrawing = NO;
@@ -197,7 +204,6 @@
 
 - (void)windowResized:(NSNotification *)notification;
 {
-  NSLog( @"New bounds = %f,%f Ideal bounds = %f,%f", [self bounds].size.width, [self bounds].size.height, [self bounds].size.width, [self idealHeight] );
   [self calculateCellPaths:[self bounds]];
   [self setNeedsDisplay:YES];
 }

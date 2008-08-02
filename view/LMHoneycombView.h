@@ -40,9 +40,9 @@
 - (void)setSelected:(LMHexCell *)selected;
 
 - (CGFloat)hexRadius;
-- (CGFloat)hexOffset;
-- (CGFloat)hexHeight;
-- (CGFloat)idealHeight;
+- (CGFloat)hexOffset:(CGFloat)radius;
+- (CGFloat)hexHeight:(CGFloat)radius;
+- (CGFloat)idealHeight:(CGFloat)radius;
 
 - (NSColor *)selectedColor;
 - (NSColor *)defaultColor;
