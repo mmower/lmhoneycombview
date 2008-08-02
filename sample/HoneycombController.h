@@ -10,10 +10,21 @@
 
 #import <HoneycombView/HoneycombView.h>
 
+#define CELL_OFFSET(column,row) ((column*rows)+row)
+
 @interface HoneycombController : NSObject <LMHoneycombMatrix> {
   IBOutlet LMHoneycombView  *honeycombView;
+  IBOutlet NSTextField      *columnsField;
+  IBOutlet NSTextField      *rowsField;
 
   NSMutableArray            *cells;
+  
+  int                       columns;
+  int                       rows;
 }
+
+- (void)generateCells;
+
+- (void)change:(id)sender;
 
 @end

@@ -12,34 +12,57 @@
 
 - (id)init {
   if( self = [super init] ) {
-    cells = [[NSMutableArray alloc] initWithCapacity:204];
+    columns = 17;
+    rows    = 12;
   }
   
   return self;
 }
 
 - (void)awakeFromNib {
-  for( int col = 0; col < 17; col++ ) {
-    for( int row = 0; row < 12; row++ ) {
-      [cells addObject:[[LMHexCell alloc] initWithColumn:col row:row data:nil]];
+  [columnsField setIntValue:columns];
+  [rowsField setIntValue:rows];
+  [self generateCells];
+}
+
+- (void)generateCells {
+  cells = [[NSMutableArray alloc] initWithCapacity:(columns*rows)];
+  for( int col = 0; col < columns; col++ ) {
+    for( int row = 0; row < rows; row++ ) {
+      [cells addObject:[[LMHexCell alloc] initWithColumn:col row:row]];
     }
   }
 }
 
 - (int)hexColumns {
-  return 17;
+  return columns;
 }
 
 - (int)hexRows {
-  return 12;
+  return rows;
 }
 
 - (LMHexCell *)hexCellAtColumn:(int)column row:(int)row {
-  return [cells objectAtIndex:((column*12)+row)];
+  return [cells objectAtIndex:CELL_OFFSET(column,row)];
 }
 
 - (void)hexCellSelected:(LMHexCell *)cell {
   NSLog( @"Selected hex at grid reference: %d,%d", [cell column], [cell row] );
+}
+
+- (void)change:(id)sender {
+  columns = [columnsField intValue];
+  if( columns < 1 ) {
+    columns = 1;
+  }
+  
+  rows = [rowsField intValue];
+  if( rows < 1 ) {
+    rows = 1;
+  }
+  
+  [self generateCells];
+  [honeycombView dataSourceChanged];
 }
 
 @end

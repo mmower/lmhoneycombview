@@ -28,7 +28,7 @@ Selection events are dispatched to both the data model and any delegate of the v
 
 * I've swapped around the drawing code and responsibilities a few times. I'm still not sure it's right yet. I toyed with making the cell a protocol as well and caching the NSBezierPath's in the view itself but felt that extending the cell was likely (I will want custom cell drawing in my own application) making it a reasonable class in itself.
 
-* In my application the grid is 17 columns of 12 cells each. This control was originally not a discrete control but was extracted from the application. I duplicated the dimensions in the sample application and, now I look, it may be that assumptions about the dimensions are hardwired into the geometry. That needs to be fixed.
+* In my application the grid is 17 columns of 12 cells each. This control was originally not a discrete control but was extracted from the application where lots of stuff was hard wired. I've spent some time looking at the geometry and I think it is now generic. 
 
 * A pretty major issue is to do with resizing. The control draws regular hexagons which are wider than they are tall this means that resizing the control can end up with either a lot of blank space or hexagons being "cut off". At this point I don't know of a means to constrain the aspect ratio of a specific control in a resizing operation - patches welcome!
 
