@@ -1,18 +1,18 @@
-LMHoneycombView
-by Matt Mower <self@mattmower.com>
-http://matt.blogs.it/
+# LMHoneycombView
+
+by Matt Mower <self@mattmower.com> - http://matt.blogs.it/
+Copyright (c) 2008 LucidMac software - http://lucidmac.com/
+Released under the MIT license (see LICENSE)
 
 # Overview
 
-This control presents a honeycomb made up of interlocking columns of regular hexagons ("hex cells") that can be selected using the mouse.
+This control is a Cocoa NSView subclass that presents a honeycomb made up of interlocking columns of regular hexagons ("hex cells") that can be selected using the mouse.
 
 <div class="thumbnail"><a href="http://skitch.com/mattmower/1kps/window"><img src="http://img.skitch.com/20080801-pmtbgm8twr8i4i4753f3j2mhrd.preview.jpg" alt="Window" /></a><br /><span style="font-family: Lucida Grande, Trebuchet, sans-serif, Helvetica, Arial; font-size: 10px; color: #808080">Uploaded with <a href="http://plasq.com/">plasq</a>'s <a href="http://skitch.com">Skitch</a>!</span></div>
 
 The honeycomb view draws cell data from a dataSource that follows an included protocol and is quite flexile. The cell class provides basic drawing and can be extended to customise the appearance of cells.
 
 I originally wrote this control as part of an application I am building. There was enough interest in how it worked that I spent some time extracting a generic honeycomb view control and re-wrote my application to use it. It's broadly 'good enough'.
-
-This control is released under the MIT license (see attached LICENSE file) and includes work .
 
 # How to use
 
