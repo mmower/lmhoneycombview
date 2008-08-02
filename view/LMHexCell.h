@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import <Cocoa/Cocoa.h>
+#import "DrawingInfo.h"
 
 @class LMHoneycombView;
 
@@ -40,6 +40,6 @@
 - (BOOL)selected;
 - (void)setSelected:(BOOL)selected;
 
-- (void)drawOnHoneycombView:(LMHoneycombView *)view;
+- (void)drawOnHoneycombView:(LMHoneycombView *)view with:(DrawingInfo)info;
 
 @end

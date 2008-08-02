@@ -74,16 +74,16 @@
   data = _data;
 }
 
-- (void)drawOnHoneycombView:(LMHoneycombView *)_view {
+- (void)drawOnHoneycombView:(LMHoneycombView *)_view with:(DrawingInfo)_info {
   if( selected ) {
-    [[_view selectedColor] set];
+    [_info.selectedColor set];
   } else {
-    [[_view defaultColor] set];
+    [_info.defaultColor set];
   }
   [path fill];
   
-  [[_view borderColor] set];
-  [path setLineWidth:[_view borderWidth]];
+  [_info.borderColor set];
+  [path setLineWidth:_info.borderWidth];
   [path stroke];
 }
 

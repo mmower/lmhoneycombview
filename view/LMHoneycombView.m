@@ -155,9 +155,15 @@
     firstDrawing = NO;
   }
   
+  DrawingInfo info;
+  info.defaultColor = [self defaultColor];
+  info.selectedColor = [self selectedColor];
+  info.borderColor = [self borderColor];
+  info.borderWidth = [self borderWidth];
+  
   for( int col = 0; col < cols; col++ ) {
     for( int row = 0; row < rows; row++ ) {
-      [[dataSource hexCellAtColumn:col row:row] drawOnHoneycombView:self];
+      [[dataSource hexCellAtColumn:col row:row] drawOnHoneycombView:self with:info];
     }
   }
 }
@@ -196,7 +202,6 @@
 }
 
 - (void)mouseDown:(NSEvent *)_event {
-  NSLog( @"mouse = %f,%f", [_event locationInWindow].x, [_event locationInWindow].y );
   [self setSelected:[self findCellAtPoint:[self convertPoint:[_event locationInWindow] fromView:nil]]];
 }
 

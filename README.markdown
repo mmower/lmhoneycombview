@@ -28,11 +28,11 @@ Selection events are dispatched to both the data model and any delegate of the v
 
 * I've swapped around the drawing code and responsibilities a few times. I'm still not sure it's right yet. I toyed with making the cell a protocol as well and caching the NSBezierPath's in the view itself but felt that extending the cell was likely (I will want custom cell drawing in my own application) making it a reasonable class in itself.
 
-* In my application the grid is 17 columns of 12 cells each. This control was originally not a discrete control but was extracted from the application where lots of stuff was hard wired. I've spent some time looking at the geometry and I think it is now generic. 
+* In my application the grid is 17 columns of 12 cells each. This control was originally not a discrete control but was extracted from the application where lots of stuff was hard wired. I've spent some time looking at the geometry and from playing with the improved sample app (where you can now change columns and rows) I think it now works for any values.
 
 * A pretty major issue is to do with resizing. The control draws regular hexagons which are wider than they are tall this means that resizing the control can end up with either a lot of blank space or hexagons being "cut off". At this point I don't know of a means to constrain the aspect ratio of a specific control in a resizing operation - patches welcome!
 
-* Drawing efficiency. The cells are responsible for drawing themself onto the view which is neat and allows cell classes to be customised to draw cells differently (e.g. to put text in them). At present the cell makes a number of calls back to the view to retrieve drawing related information such as border color, selected colour, border thickness and so on. Each of these calls is made for each cell. Passing this information in a struct would be a relatively simple optimisation.
+* Drawing efficiency. The cells are responsible for drawing themself onto the view which is neat and allows cell classes to be customised to draw cells differently (e.g. to put text in them). A simple optimization has been made by passing drawing context (e.g. colours) from the view to the cells rather than each cell requesting the same information from the view as it draws. There may be other optimizations to be made here also.
 
 * Hit detection uses the brute force method of querying each cell in turn to see if the mouse down event occurred within it's NSBezierPath. In practice this has not proved too slow for a grid of 204 cells but could probably be optimized using some simple heuristics to narrow down the range of possible cells.
 

@@ -22,6 +22,7 @@
 		C9874AE50E42308C0068E7BF /* LMRegularPolygon.h in Headers */ = {isa = PBXBuildFile; fileRef = C93C64340E3FEEE400A6CE15 /* LMRegularPolygon.h */; };
 		C9874AE60E42308C0068E7BF /* LMRegularPolygon.m in Sources */ = {isa = PBXBuildFile; fileRef = C93C64350E3FEEE400A6CE15 /* LMRegularPolygon.m */; };
 		C9874AE70E42308C0068E7BF /* HoneycombView.h in Headers */ = {isa = PBXBuildFile; fileRef = C9389E950E421F240077F84F /* HoneycombView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C9F68A680E447A33004B631C /* DrawingInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = C9F68A670E447A33004B631C /* DrawingInfo.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		C9874ADA0E4230790068E7BF /* HoneycombView-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HoneycombView-Info.plist"; sourceTree = "<group>"; };
 		C9874B4A0E42337A0068E7BF /* HoneycombViewIBPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HoneycombViewIBPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9874B4B0E42337A0068E7BF /* HoneycombViewIBPlugin-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HoneycombViewIBPlugin-Info.plist"; sourceTree = "<group>"; };
+		C9F68A670E447A33004B631C /* DrawingInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawingInfo.h; sourceTree = "<group>"; };
 		D2F7E79907B2D74100F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -150,6 +152,7 @@
 				C93C64340E3FEEE400A6CE15 /* LMRegularPolygon.h */,
 				C93C64350E3FEEE400A6CE15 /* LMRegularPolygon.m */,
 				C9389E950E421F240077F84F /* HoneycombView.h */,
+				C9F68A670E447A33004B631C /* DrawingInfo.h */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -212,6 +215,7 @@
 				C9874AE30E42308C0068E7BF /* LMHoneycombView.h in Headers */,
 				C9874AE50E42308C0068E7BF /* LMRegularPolygon.h in Headers */,
 				C9874AE70E42308C0068E7BF /* HoneycombView.h in Headers */,
+				C9F68A680E447A33004B631C /* DrawingInfo.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
