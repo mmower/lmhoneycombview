@@ -13,6 +13,8 @@
 @class LMHoneycombView;
 
 @interface LMHexCell : NSObject {
+  NSPoint             centre;
+  CGFloat             radius;
   NSBezierPath        *path;
   int                 col;
   int                 row;
@@ -24,7 +26,10 @@
 - (id)initWithColumn:(int)col row:(int)row data:(id)data;
 
 - (NSBezierPath *)path;
-- (void)setPath:(NSBezierPath *)path;
+- (void)setHexCentre:(NSPoint)centre radius:(CGFloat)radius;
+
+- (NSPoint)centre;
+- (CGFloat)radius;
 
 - (id)data;
 - (void)setData:(id)data;

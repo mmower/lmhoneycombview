@@ -10,6 +10,8 @@
 
 #import "LMHoneycombView.h"
 
+#import "LMRegularPolygon.h"
+
 @implementation LMHexCell
 
 - (id)initWithColumn:(int)_col row:(int)_row {
@@ -23,7 +25,6 @@
     row           = _row;
     data          = _data;
     selected      = NO;
-    // NSLog( @"Cell %@ initial selected state = %@", self, selected ? @"YES" : @"NO" );
   }
   
   return self;
@@ -33,8 +34,20 @@
   return path;
 }
 
-- (void)setPath:(NSBezierPath *)_path {
-  path = _path;
+- (void)setHexCentre:(NSPoint)_centre radius:(CGFloat)_radius {
+  centre = _centre;
+  radius = _radius;
+  
+  path = [NSBezierPath bezierPath];
+  [path appendHexagonWithCentre:_centre radius:_radius];
+}
+
+- (NSPoint)centre {
+  return centre;
+}
+
+- (CGFloat)radius {
+  return radius;
 }
 
 - (int)column {
@@ -50,7 +63,6 @@
 }
 
 - (void)setSelected:(BOOL)_selected {
-  // NSLog( @"Cell %@ selected = %@", self, _selected ? @"YES" : @"NO" );
   selected = _selected;
 }
 
@@ -63,8 +75,6 @@
 }
 
 - (void)drawOnHoneycombView:(LMHoneycombView *)_view {
-  // NSLog( @"Cell %@ %@ selected", self, selected ? @"is" : @"is not" );
-  
   if( selected ) {
     [[_view selectedColor] set];
   } else {

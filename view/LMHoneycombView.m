@@ -7,7 +7,6 @@
 //
 
 #import "HoneycombView.h"
-#import "LMRegularPolygon.h"
 
 @implementation LMHoneycombView
 
@@ -121,16 +120,12 @@
   
   for( int col = 0; col < cols; col++ ) {
     for( int row = 0; row < rows; row ++ ) {
-      LMHexCell *cell = [dataSource hexCellAtColumn:col row:row];
-      
       hexCentre = NSMakePoint(
                     [self hexOffset] + (col * ( (3 * [self hexRadius] ) / 2 ) ),
                     [self hexOffset] + (row * [self hexHeight]) + ( col % 2 == 0 ? ([self hexHeight] / 2) : 0 )
                     );
       
-      NSBezierPath *hexPath = [NSBezierPath bezierPath];
-      [hexPath appendHexagonWithCentre:hexCentre radius:[self hexRadius]];
-      [cell setPath:hexPath];
+      [[dataSource hexCellAtColumn:col row:row] setHexCentre:hexCentre radius:[self hexRadius]];
     }
   }
 }
