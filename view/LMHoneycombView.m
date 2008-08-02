@@ -99,8 +99,19 @@
 
 // Drawing code
 
+/*
+ * Calculation of the hex radius is complicated by the interlocking
+ * hexes where each hex, except the first, loses r/2 of it's width
+ * to the previous hex. Also we have r/2 padding around the edges.
+ *
+ * Basic formula r = 2w / 3(cols)+1
+ *
+ * with padding
+ *
+ * r = 2w / 3(cols+1)
+ */
 - (CGFloat)hexRadius {
-  return [self bounds].size.width / 27;
+  return ( 2 * [self bounds].size.width ) / ( 3 * ( cols + 1 ) );
 }
 
 - (CGFloat)hexOffset {
@@ -112,7 +123,7 @@
 }
 
 - (CGFloat)idealHeight {
-  return [self hexOffset] + ( 12 * [self hexHeight] );
+  return [self hexOffset] + ( rows * [self hexHeight] );
 }
 
 - (void)calculateCellPaths:(NSRect)__bounds {
