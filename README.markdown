@@ -1,8 +1,8 @@
 # LMHoneycombView
 
-by Matt Mower <self@mattmower.com> - http://matt.blogs.it/
-Copyright (c) 2008 LucidMac software - http://lucidmac.com/
-Released under the MIT license (see LICENSE)
+by Matt Mower &lt;self AT mattmower DOT com&gt; - http://matt.blogs.it/  
+Copyright (c) 2008 LucidMac software  http://lucidmac.com/  
+Released under the MIT license (see LICENSE) 
 
 # Overview
 
@@ -26,6 +26,8 @@ Selection events are dispatched to both the data model and any delegate of the v
 
 * This control was built from an app that uses Objective-C garbage collection and probably won't work without it. It's unlikely to be much work to make it a dual-framework but it's not important to me right now.
 
+* I've swapped around the drawing code and responsibilities a few times. I'm still not sure it's right yet. I toyed with making the cell a protocol as well and caching the NSBezierPath's in the view itself but felt that extending the cell was likely (I will want custom cell drawing in my own application) making it a reasonable class in itself.
+
 * In my application the grid is 17 columns of 12 cells each. This control was originally not a discrete control but was extracted from the application. I duplicated the dimensions in the sample application and, now I look, it may be that assumptions about the dimensions are hardwired into the geometry. That needs to be fixed.
 
 * A pretty major issue is to do with resizing. The control draws regular hexagons which are wider than they are tall this means that resizing the control can end up with either a lot of blank space or hexagons being "cut off". At this point I don't know of a means to constrain the aspect ratio of a specific control in a resizing operation - patches welcome!
@@ -35,3 +37,7 @@ Selection events are dispatched to both the data model and any delegate of the v
 * Hit detection uses the brute force method of querying each cell in turn to see if the mouse down event occurred within it's NSBezierPath. In practice this has not proved too slow for a grid of 204 cells but could probably be optimized using some simple heuristics to narrow down the range of possible cells.
 
 * It shouldn't be too hard to add an Interface Builder palette for the hex view. It shouldn't be too hard but of course the stuff you have to do is a little daunting so this may take a while.
+
+# Getting in touch
+
+If you find this control useful please drop me a line (self AT mattmower DOT com) and let me know how you're using it. I'd welcome patches to address any of the issues raised above or that improve the control generally.
