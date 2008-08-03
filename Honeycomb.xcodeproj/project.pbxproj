@@ -22,7 +22,7 @@
 		C9874AE50E42308C0068E7BF /* LMRegularPolygon.h in Headers */ = {isa = PBXBuildFile; fileRef = C93C64340E3FEEE400A6CE15 /* LMRegularPolygon.h */; };
 		C9874AE60E42308C0068E7BF /* LMRegularPolygon.m in Sources */ = {isa = PBXBuildFile; fileRef = C93C64350E3FEEE400A6CE15 /* LMRegularPolygon.m */; };
 		C9874AE70E42308C0068E7BF /* HoneycombView.h in Headers */ = {isa = PBXBuildFile; fileRef = C9389E950E421F240077F84F /* HoneycombView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C9F68A680E447A33004B631C /* DrawingInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = C9F68A670E447A33004B631C /* DrawingInfo.h */; };
+		C9F68A680E447A33004B631C /* DrawingInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = C9F68A670E447A33004B631C /* DrawingInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */

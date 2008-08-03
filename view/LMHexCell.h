@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "DrawingInfo.h"
+#import <HoneycombView/DrawingInfo.h>
 
 @class LMHoneycombView;
 
