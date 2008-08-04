@@ -6,9 +6,9 @@
 //  Copyright 2008 LucidMac Software. All rights reserved.
 //
 
-#import "LMHexCell.h"
+#import <HoneycombView/LMHexCell.h>
 
-#import "LMHoneycombView.h"
+#import <HoneycombView/LMHoneycombView.h>
 
 #import "LMRegularPolygon.h"
 
@@ -74,16 +74,16 @@
   data = _data;
 }
 
-- (void)drawOnHoneycombView:(LMHoneycombView *)_view with:(DrawingInfo)_info {
+- (void)drawOnHoneycombView:(LMHoneycombView *)_view withAttributes:(NSMutableDictionary *)_attributes {
   if( selected ) {
-    [_info.selectedColor set];
+    [[_attributes objectForKey:LMHoneycombViewSelectedColor] set];
   } else {
-    [_info.defaultColor set];
+    [[_attributes objectForKey:LMHoneycombViewDefaultColor] set];
   }
   [path fill];
   
-  [_info.borderColor set];
-  [path setLineWidth:_info.borderWidth];
+  [[_attributes objectForKey:LMHoneycombViewBorderColor] set];
+  [path setLineWidth:[[_attributes objectForKey:LMHoneycombViewBorderWidth] floatValue]];
   [path stroke];
 }
 

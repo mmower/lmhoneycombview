@@ -8,9 +8,14 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "LMHoneycombMatrix.h"
+#import <HoneycombView/LMHoneycombMatrix.h>
 
 @class LMHexCell;
+
+extern NSString* const LMHoneycombViewDefaultColor;
+extern NSString* const LMHoneycombViewSelectedColor;
+extern NSString* const LMHoneycombViewBorderColor;
+extern NSString* const LMHoneycombViewBorderWidth;
 
 @interface LMHoneycombView : NSView {
   LMHexCell             *selected;
@@ -23,10 +28,7 @@
   
   BOOL                  firstDrawing;
   
-  NSColor               *selectedColor;
-  NSColor               *defaultColor;
-  NSColor               *borderColor;
-  CGFloat               borderWidth;
+  NSMutableDictionary   *drawingAttributes;
 }
 
 - (id)delegate;
@@ -43,11 +45,16 @@
 - (CGFloat)hexOffset:(CGFloat)radius;
 - (CGFloat)hexHeight:(CGFloat)radius;
 - (CGFloat)idealHeight:(CGFloat)radius;
+- (CGFloat)layerAspectRatio;
 
 - (NSColor *)selectedColor;
+- (void)setSelectedColor:(NSColor *)selectedColor;
 - (NSColor *)defaultColor;
+- (void)setDefaultColor:(NSColor *)defaultColor;
 - (NSColor *)borderColor;
+- (void)setBorderColor:(NSColor *)borderColor;
 - (CGFloat)borderWidth;
+- (void)setBorderWidth:(CGFloat)borderWidth;
 
 - (LMHexCell *)findCellAtPoint:(NSPoint)point;
 

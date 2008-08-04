@@ -6,7 +6,12 @@
 //  Copyright 2008 LucidMac Software. All rights reserved.
 //
 
-#import "HoneycombView.h"
+#import <HoneycombView/HoneycombView.h>
+
+NSString* const LMHoneycombViewDefaultColor = @"default.color";
+NSString* const LMHoneycombViewSelectedColor = @"selected.color";
+NSString* const LMHoneycombViewBorderColor = @"border.color";
+NSString* const LMHoneycombViewBorderWidth = @"border.width";
 
 @implementation LMHoneycombView
 
@@ -15,12 +20,14 @@
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-      selected      = nil;
-      firstDrawing  = YES;
-      selectedColor = [NSColor blueColor];
-      defaultColor  = [NSColor grayColor];
-      borderColor   = [NSColor blackColor];
-      borderWidth   = 2.0;
+      selected          = nil;
+      firstDrawing      = YES;
+      drawingAttributes = [[NSMutableDictionary alloc] init];
+      
+      [self setDefaultColor:[NSColor grayColor]];
+      [self setSelectedColor:[NSColor blueColor]];
+      [self setBorderColor:[NSColor blackColor]];
+      [self setBorderWidth:2.0];
     }
     return self;
 }
@@ -66,35 +73,35 @@
 }
 
 - (NSColor *)defaultColor {
-  return defaultColor;
+  return [drawingAttributes objectForKey:LMHoneycombViewDefaultColor];
 }
 
 - (void)setDefaultColor:(NSColor *)_defaultColor {
-  defaultColor = _defaultColor;
+  [drawingAttributes setObject:_defaultColor forKey:LMHoneycombViewDefaultColor];
 }
 
 - (NSColor *)selectedColor {
-  return selectedColor;
+  return [drawingAttributes objectForKey:LMHoneycombViewSelectedColor];
 }
 
 - (void)setSelectedColor:(NSColor *)_selectedColor {
-  selectedColor = _selectedColor;
+  [drawingAttributes setObject:_selectedColor forKey:LMHoneycombViewSelectedColor];
 }
 
 - (NSColor *)borderColor {
-  return borderColor;
+  return [drawingAttributes objectForKey:LMHoneycombViewBorderColor];
 }
 
 - (void)setBorderColor:(NSColor *)_borderColor {
-  borderColor = _borderColor;
+  [drawingAttributes setObject:_borderColor forKey:LMHoneycombViewBorderColor];
 }
 
 - (CGFloat)borderWidth {
-  return borderWidth;
+  return [[drawingAttributes objectForKey:LMHoneycombViewBorderWidth] floatValue];
 }
 
 - (void)setBorderWidth:(CGFloat)_borderWidth {
-  borderWidth = _borderWidth;
+  [drawingAttributes setObject:[NSNumber numberWithFloat:_borderWidth] forKey:LMHoneycombViewBorderWidth];
 }
 
 // Drawing code
@@ -130,6 +137,14 @@
   return [self hexOffset:_radius] + ( rows * [self hexHeight:_radius] );
 }
 
+- (CGFloat)layerAspectRatio {
+  CGFloat radius = [self hexRadius];
+  CGFloat ar = ( 2 * radius ) / [self hexHeight:radius];
+  NSLog( @"self=%@, radius=%f, height=%f, ar=%f", self, radius, [self hexHeight:radius], ar );
+  
+  return ar;
+}
+
 - (void)calculateCellPaths:(NSRect)__bounds {
   NSPoint hexCentre;
   
@@ -155,15 +170,9 @@
     firstDrawing = NO;
   }
   
-  DrawingInfo info;
-  info.defaultColor = [self defaultColor];
-  info.selectedColor = [self selectedColor];
-  info.borderColor = [self borderColor];
-  info.borderWidth = [self borderWidth];
-  
   for( int col = 0; col < cols; col++ ) {
     for( int row = 0; row < rows; row++ ) {
-      [[dataSource hexCellAtColumn:col row:row] drawOnHoneycombView:self with:info];
+      [[dataSource hexCellAtColumn:col row:row] drawOnHoneycombView:self withAttributes:drawingAttributes];
     }
   }
 }

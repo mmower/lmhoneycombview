@@ -8,8 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import <HoneycombView/DrawingInfo.h>
-
 @class LMHoneycombView;
 
 @interface LMHexCell : NSObject {
@@ -40,6 +38,6 @@
 - (BOOL)selected;
 - (void)setSelected:(BOOL)selected;
 
-- (void)drawOnHoneycombView:(LMHoneycombView *)view with:(DrawingInfo)info;
+- (void)drawOnHoneycombView:(LMHoneycombView *)view withAttributes:(NSMutableDictionary *)attributes;
 
 @end
