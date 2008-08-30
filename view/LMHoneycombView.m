@@ -47,6 +47,8 @@ NSString* const LMHoneycombViewBorderWidth = @"border.width";
   delegate = _delegate;
 }
 
+@synthesize drawingAttributes;
+
 /*
  * The dataSource provides LMHexCell objects to the view, referenced by column+row,
  * on demand.

@@ -31,6 +31,8 @@ extern NSString* const LMHoneycombViewBorderWidth;
   NSMutableDictionary   *drawingAttributes;
 }
 
+@property (readonly) NSMutableDictionary *drawingAttributes;
+
 - (id)delegate;
 - (void)setDelegate:(id)delegate;
 
