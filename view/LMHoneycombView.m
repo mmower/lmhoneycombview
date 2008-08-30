@@ -172,7 +172,7 @@ NSString* const LMHoneycombViewBorderWidth = @"border.width";
   
   for( int col = 0; col < cols; col++ ) {
     for( int row = 0; row < rows; row++ ) {
-      [[dataSource hexCellAtColumn:col row:row] drawOnHoneycombView:self withAttributes:drawingAttributes];
+      [[dataSource hexCellAtColumn:col row:row] drawOnHoneycombView:self withAttributes:[drawingAttributes mutableCopy]];
     }
   }
 }
