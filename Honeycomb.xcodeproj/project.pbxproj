@@ -22,6 +22,16 @@
 		C9874AE70E42308C0068E7BF /* HoneycombView.h in Headers */ = {isa = PBXBuildFile; fileRef = C9389E950E421F240077F84F /* HoneycombView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		9131DD400E6C73EC00C59D1A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C9874AD80E4230790068E7BF /* HoneycombView */;
+			remoteInfo = HoneycombView;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		0867D6A5FE840307C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
@@ -203,6 +213,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				9131DD410E6C73EC00C59D1A /* PBXTargetDependency */,
 			);
 			name = HoneycombTester;
 			productName = HoneycombTester;
@@ -318,6 +329,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9131DD410E6C73EC00C59D1A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C9874AD80E4230790068E7BF /* HoneycombView */;
+			targetProxy = 9131DD400E6C73EC00C59D1A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		089C1666FE841158C02AAC07 /* InfoPlist.strings */ = {
