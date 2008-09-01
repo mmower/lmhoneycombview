@@ -7,12 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C9389DFA0E420A8E0077F84F /* LMHexCellTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C9389DF90E420A8E0077F84F /* LMHexCellTest.m */; };
 		C9389E500E4211190077F84F /* HoneycombController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9389E300E420FD40077F84F /* HoneycombController.m */; };
 		C9389E550E4212800077F84F /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9389E530E42127B0077F84F /* MainMenu.xib */; };
 		C9389E690E4213750077F84F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C9389E670E42136E0077F84F /* main.m */; };
 		C9551F690E43D03C00E3C252 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = C9551F680E43D03C00E3C252 /* LICENSE */; };
-		C9874ADE0E4230840068E7BF /* HoneycombView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9874AD90E4230790068E7BF /* HoneycombView.framework */; };
 		C9874ADF0E4230840068E7BF /* HoneycombView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9874AD90E4230790068E7BF /* HoneycombView.framework */; };
 		C9874AE00E42308C0068E7BF /* LMHexCell.h in Headers */ = {isa = PBXBuildFile; fileRef = C93C642F0E3FEEE400A6CE15 /* LMHexCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C9874AE10E42308C0068E7BF /* LMHexCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C93C64300E3FEEE400A6CE15 /* LMHexCell.m */; };
@@ -31,10 +29,6 @@
 		1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF5E0370ADEE00C91783 /* Honeycomb_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Honeycomb_Prefix.pch; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C9389DF10E420A3F0077F84F /* Tests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C9389DF20E420A3F0077F84F /* Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
-		C9389DF80E420A8E0077F84F /* LMHexCellTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMHexCellTest.h; sourceTree = "<group>"; };
-		C9389DF90E420A8E0077F84F /* LMHexCellTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMHexCellTest.m; sourceTree = "<group>"; };
 		C9389E270E420FA90077F84F /* HoneycombTester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HoneycombTester.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9389E290E420FA90077F84F /* HoneycombTester-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HoneycombTester-Info.plist"; sourceTree = "<group>"; };
 		C9389E2F0E420FD40077F84F /* HoneycombController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HoneycombController.h; sourceTree = "<group>"; };
@@ -58,14 +52,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		C9389DEE0E420A3F0077F84F /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C9874ADE0E4230840068E7BF /* HoneycombView.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C9389E250E420FA90077F84F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -94,7 +80,6 @@
 		034768DFFF38A50411DB9C8B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C9389DF10E420A3F0077F84F /* Tests.octest */,
 				C9389E270E420FA90077F84F /* HoneycombTester.app */,
 				C9874AD90E4230790068E7BF /* HoneycombView.framework */,
 				C9874B4A0E42337A0068E7BF /* HoneycombViewIBPlugin.bundle */,
@@ -106,13 +91,11 @@
 			isa = PBXGroup;
 			children = (
 				C9389E2E0E420FC10077F84F /* sample */,
-				C9389DF70E420A7C0077F84F /* test */,
 				08FB77AEFE84172EC02AAC07 /* view */,
 				32C88DFF0371C24200C91783 /* Other Sources */,
 				089C1665FE841158C02AAC07 /* Resources */,
 				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
 				034768DFFF38A50411DB9C8B /* Products */,
-				C9389DF20E420A3F0077F84F /* Tests-Info.plist */,
 				C9389E290E420FA90077F84F /* HoneycombTester-Info.plist */,
 				C9874ADA0E4230790068E7BF /* HoneycombView-Info.plist */,
 				C9874B4B0E42337A0068E7BF /* HoneycombViewIBPlugin-Info.plist */,
@@ -180,15 +163,6 @@
 			name = "Other Sources";
 			sourceTree = "<group>";
 		};
-		C9389DF70E420A7C0077F84F /* test */ = {
-			isa = PBXGroup;
-			children = (
-				C9389DF80E420A8E0077F84F /* LMHexCellTest.h */,
-				C9389DF90E420A8E0077F84F /* LMHexCellTest.m */,
-			);
-			path = test;
-			sourceTree = "<group>";
-		};
 		C9389E2E0E420FC10077F84F /* sample */ = {
 			isa = PBXGroup;
 			children = (
@@ -218,24 +192,6 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		C9389DF00E420A3F0077F84F /* Tests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C9389DF50E420A3F0077F84F /* Build configuration list for PBXNativeTarget "Tests" */;
-			buildPhases = (
-				C9389DEC0E420A3F0077F84F /* Resources */,
-				C9389DED0E420A3F0077F84F /* Sources */,
-				C9389DEE0E420A3F0077F84F /* Frameworks */,
-				C9389DEF0E420A3F0077F84F /* ShellScript */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = Tests;
-			productName = Tests;
-			productReference = C9389DF10E420A3F0077F84F /* Tests.octest */;
-			productType = "com.apple.product-type.bundle";
-		};
 		C9389E260E420FA90077F84F /* HoneycombTester */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C9389E2C0E420FAA0077F84F /* Build configuration list for PBXNativeTarget "HoneycombTester" */;
@@ -301,7 +257,6 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C9389DF00E420A3F0077F84F /* Tests */,
 				C9389E260E420FA90077F84F /* HoneycombTester */,
 				C9874AD80E4230790068E7BF /* HoneycombView */,
 				C9874B490E42337A0068E7BF /* HoneycombViewIBPlugin */,
@@ -310,13 +265,6 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		C9389DEC0E420A3F0077F84F /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C9389E230E420FA90077F84F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -342,31 +290,7 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		C9389DEF0E420A3F0077F84F /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
-		C9389DED0E420A3F0077F84F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C9389DFA0E420A8E0077F84F /* LMHexCellTest.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C9389E240E420FA90077F84F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -432,66 +356,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
 				SDKROOT = macosx10.5;
-			};
-			name = Release;
-		};
-		C9389DF30E420A3F0077F84F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
-					"\"$(SRCROOT)/build/Debug\"",
-				);
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
-				INFOPLIST_FILE = "Tests-Info.plist";
-				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Cocoa,
-					"-framework",
-					SenTestingKit,
-				);
-				PREBINDING = NO;
-				PRODUCT_NAME = Tests;
-				WRAPPER_EXTENSION = octest;
-			};
-			name = Debug;
-		};
-		C9389DF40E420A3F0077F84F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
-					"\"$(SRCROOT)/build/Debug\"",
-				);
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
-				INFOPLIST_FILE = "Tests-Info.plist";
-				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Cocoa,
-					"-framework",
-					SenTestingKit,
-				);
-				PREBINDING = NO;
-				PRODUCT_NAME = Tests;
-				WRAPPER_EXTENSION = octest;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -659,15 +523,6 @@
 			buildConfigurations = (
 				1DEB91B208733DA50010E9CD /* Debug */,
 				1DEB91B308733DA50010E9CD /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C9389DF50E420A3F0077F84F /* Build configuration list for PBXNativeTarget "Tests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C9389DF30E420A3F0077F84F /* Debug */,
-				C9389DF40E420A3F0077F84F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
