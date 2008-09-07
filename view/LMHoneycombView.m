@@ -59,9 +59,7 @@ NSString* const LMHoneycombViewBorderWidth = @"border.width";
 
 - (void)setDataSource:(id<LMHoneycombMatrix>)_dataSource {
   dataSource = _dataSource;
-  
-  cols = [dataSource hexColumns];
-  rows = [dataSource hexRows];
+  [self dataSourceChanged];
 }
 
 /*
