@@ -11,6 +11,7 @@
 NSString* const LMHoneycombViewDefaultColor = @"default.color";
 NSString* const LMHoneycombViewSelectedColor = @"selected.color";
 NSString* const LMHoneycombViewBorderColor = @"border.color";
+NSString* const LMHoneycombViewSelectedBorderColor = @"selected.border.color";
 NSString* const LMHoneycombViewBorderWidth = @"border.width";
 
 @implementation LMHoneycombView
@@ -27,6 +28,7 @@ NSString* const LMHoneycombViewBorderWidth = @"border.width";
       [self setDefaultColor:[NSColor grayColor]];
       [self setSelectedColor:[NSColor blueColor]];
       [self setBorderColor:[NSColor blackColor]];
+      [self setSelectedBorderColor:[NSColor blackColor]];
       [self setBorderWidth:2.0];
     }
     return self;
@@ -96,6 +98,14 @@ NSString* const LMHoneycombViewBorderWidth = @"border.width";
   [drawingAttributes setObject:_borderColor forKey:LMHoneycombViewBorderColor];
 }
 
+- (NSColor *)selectedBorderColor {
+  return [drawingAttributes objectForKey:LMHoneycombViewSelectedBorderColor];
+}
+
+- (void)setSelectedBorderColor:(NSColor *)_selectedBorderColor_ {
+  [drawingAttributes setObject:_selectedBorderColor_ forKey:LMHoneycombViewSelectedBorderColor];  
+}
+
 - (CGFloat)borderWidth {
   return [[drawingAttributes objectForKey:LMHoneycombViewBorderWidth] floatValue];
 }
@@ -156,7 +166,7 @@ NSString* const LMHoneycombViewBorderWidth = @"border.width";
     for( int row = 0; row < rows; row ++ ) {
       hexCentre = NSMakePoint(
                     ( col + 1 ) * offset,
-                    offset + (row * height) + ( ( 1 - col % 2 ) * ( height / 2 ) )
+                    offset + (row * height) + ( ( col % 2 ) * ( height / 2 ) )
                     );
       
       [[dataSource hexCellAtColumn:col row:row] setHexCentre:hexCentre radius:radius];
@@ -172,9 +182,14 @@ NSString* const LMHoneycombViewBorderWidth = @"border.width";
   
   for( int col = 0; col < cols; col++ ) {
     for( int row = 0; row < rows; row++ ) {
-      [[dataSource hexCellAtColumn:col row:row] drawOnHoneycombView:self withAttributes:[drawingAttributes mutableCopy]];
+      LMHexCell *cell = [dataSource hexCellAtColumn:col row:row];
+      if( cell != selected ) {
+        [cell drawOnHoneycombView:self withAttributes:[drawingAttributes mutableCopy]];
+      }
     }
   }
+  
+  [selected drawOnHoneycombView:self withAttributes:[drawingAttributes mutableCopy]];
 }
 
 - (LMHexCell *)findCellAtPoint:(NSPoint)_point {

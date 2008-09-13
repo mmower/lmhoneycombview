@@ -15,6 +15,7 @@
 extern NSString* const LMHoneycombViewDefaultColor;
 extern NSString* const LMHoneycombViewSelectedColor;
 extern NSString* const LMHoneycombViewBorderColor;
+extern NSString* const LMHoneycombViewSelectedBorderColor;
 extern NSString* const LMHoneycombViewBorderWidth;
 
 @interface LMHoneycombView : NSView {
@@ -55,6 +56,8 @@ extern NSString* const LMHoneycombViewBorderWidth;
 - (void)setDefaultColor:(NSColor *)defaultColor;
 - (NSColor *)borderColor;
 - (void)setBorderColor:(NSColor *)borderColor;
+- (NSColor *)selectedBorderColor;
+- (void)setSelectedBorderColor:(NSColor *)selectedBorderColor;
 - (CGFloat)borderWidth;
 - (void)setBorderWidth:(CGFloat)borderWidth;
 
