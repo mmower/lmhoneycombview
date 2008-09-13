@@ -82,7 +82,11 @@
   }
   [path fill];
   
-  [[_attributes objectForKey:LMHoneycombViewBorderColor] set];
+  if( selected ) {
+    [[_attributes objectForKey:LMHoneycombViewSelectedBorderColor] set];
+  } else {
+    [[_attributes objectForKey:LMHoneycombViewBorderColor] set];
+  }
   [path setLineWidth:[[_attributes objectForKey:LMHoneycombViewBorderWidth] floatValue]];
   [path stroke];
 }
