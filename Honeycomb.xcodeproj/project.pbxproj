@@ -27,7 +27,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = C9874AD80E4230790068E7BF /* HoneycombView */;
+			remoteGlobalIDString = C9874AD80E4230790068E7BF;
 			remoteInfo = HoneycombView;
 		};
 /* End PBXContainerItemProxy section */
