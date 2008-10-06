@@ -91,4 +91,8 @@
   [path stroke];
 }
 
+- (NSMenu *)contextMenu {
+  return nil;
+}
+
 @end

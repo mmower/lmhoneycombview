@@ -225,8 +225,15 @@ NSString* const LMHoneycombViewBorderWidth = @"border.width";
   [self setNeedsDisplay:YES];
 }
 
-- (void)mouseDown:(NSEvent *)_event {
-  [self setSelected:[self findCellAtPoint:[self convertPoint:[_event locationInWindow] fromView:nil]]];
+- (void)mouseDown:(NSEvent *)_event_ {
+  [self setSelected:[self findCellAtPoint:[self convertPoint:[_event_ locationInWindow] fromView:nil]]];
+}
+
+- (void)rightMouseDown:(NSEvent *)_event_ {
+  NSMenu *contextMenu = [[self findCellAtPoint:[self convertPoint:[_event_ locationInWindow] fromView:nil]] contextMenu];
+  if( contextMenu ) {
+    [NSMenu popUpContextMenu:contextMenu withEvent:_event_ forView:self];
+  }
 }
 
 // Notifications

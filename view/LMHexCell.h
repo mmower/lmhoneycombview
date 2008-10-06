@@ -40,4 +40,6 @@
 
 - (void)drawOnHoneycombView:(LMHoneycombView *)view withAttributes:(NSMutableDictionary *)attributes;
 
+- (NSMenu *)contextMenu;
+
 @end
