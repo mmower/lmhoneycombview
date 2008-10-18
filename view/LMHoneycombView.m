@@ -212,9 +212,9 @@ NSString* const LMHoneycombViewBorderWidth = @"border.width";
   return selected;
 }
 
-- (void)setSelected:(LMHexCell *)_selected {
+- (void)setSelected:(LMHexCell *)_selected_ {
   [selected setSelected:NO];
-  selected = _selected;
+  selected = _selected_;
   [selected setSelected:YES];
   
   [dataSource hexCellSelected:selected];
@@ -230,9 +230,15 @@ NSString* const LMHoneycombViewBorderWidth = @"border.width";
 }
 
 - (void)rightMouseDown:(NSEvent *)_event_ {
-  NSMenu *contextMenu = [[self findCellAtPoint:[self convertPoint:[_event_ locationInWindow] fromView:nil]] contextMenu];
+  NSPoint point = [self convertPoint:[_event_ locationInWindow] fromView:nil];
+  
+  NSMenu *contextMenu = [[self findCellAtPoint:point] contextMenu];
   if( contextMenu ) {
-    [NSMenu popUpContextMenu:contextMenu withEvent:_event_ forView:self];
+    NSPopUpButtonCell *cell = [[NSPopUpButtonCell alloc] initTextCell:@"Context Menu" pullsDown:YES];
+    [cell setMenu:contextMenu];
+    [cell setAutoenablesItems:YES];
+    [cell performClickWithFrame:NSMakeRect(point.x,point.y,1,1) inView:self];
+    // [NSMenu popUpContextMenu:contextMenu withEvent:_event_ forView:self];
   }
 }
 
