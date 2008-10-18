@@ -175,21 +175,26 @@ NSString* const LMHoneycombViewBorderWidth = @"border.width";
 }
 
 - (void)drawRect:(NSRect)rect {
+  NSMutableDictionary *currentDrawingAttributes = [NSMutableDictionary dictionary];
+  
   if( firstDrawing ) {
     [self calculateCellPaths:[self bounds]];
     firstDrawing = NO;
   }
   
+  LMHexCell *cell;
   for( int col = 0; col < cols; col++ ) {
     for( int row = 0; row < rows; row++ ) {
-      LMHexCell *cell = [dataSource hexCellAtColumn:col row:row];
+      cell = [dataSource hexCellAtColumn:col row:row];
       if( cell != selected ) {
-        [cell drawOnHoneycombView:self withAttributes:[drawingAttributes mutableCopy]];
+        [currentDrawingAttributes setDictionary:drawingAttributes];
+        [cell drawOnHoneycombView:self withAttributes:currentDrawingAttributes];
       }
     }
   }
   
-  [selected drawOnHoneycombView:self withAttributes:[drawingAttributes mutableCopy]];
+  [currentDrawingAttributes setDictionary:drawingAttributes];
+  [selected drawOnHoneycombView:self withAttributes:currentDrawingAttributes];
 }
 
 - (LMHexCell *)findCellAtPoint:(NSPoint)_point {
