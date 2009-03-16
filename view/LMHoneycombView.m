@@ -14,6 +14,13 @@ NSString* const LMHoneycombViewBorderColor = @"border.color";
 NSString* const LMHoneycombViewSelectedBorderColor = @"selected.border.color";
 NSString* const LMHoneycombViewBorderWidth = @"border.width";
 
+@interface LMHoneycombView (PrivateMethods)
+
+- (void)drawCells:(NSMutableDictionary *)currentDrawingAttributes;
+
+@end
+
+
 @implementation LMHoneycombView
 
 // Object Lifecycle
@@ -21,9 +28,9 @@ NSString* const LMHoneycombViewBorderWidth = @"border.width";
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-      selected          = nil;
-      firstDrawing      = YES;
-      drawingAttributes = [[NSMutableDictionary alloc] init];
+      mSelected             = nil;
+      mRecalculateCellPaths = YES;
+      mDrawingAttributes    = [[NSMutableDictionary alloc] init];
       
       [self setDefaultColor:[NSColor grayColor]];
       [self setSelectedColor:[NSColor blueColor]];
@@ -39,82 +46,99 @@ NSString* const LMHoneycombViewBorderWidth = @"border.width";
   [super finalize];
 }
 
-// Properties
 
-- (id)delegate {
-  return delegate;
+#pragma mark Properties
+
+@synthesize mDelegate;
+@synthesize mDrawingAttributes;
+@synthesize mRecalculateCellPaths;
+@synthesize mCols;
+@synthesize mRows;
+@synthesize mSelected;
+
+- (void)setSelected:(LMHexCell *)selected {
+  [mSelected setSelected:NO];
+  mSelected = selected;
+  [mSelected setSelected:YES];
+  
+  [[self dataSource] hexCellSelected:mSelected];
+  if( [[self delegate] respondsToSelector:@selector(honeycombView:hexCellSelected:)] ) {
+    [[self delegate] honeycombView:self hexCellSelected:mSelected];
+  }
+  
+  [self setNeedsDisplay:YES];
 }
 
-- (void)setDelegate:(id)_delegate {
-  delegate = _delegate;
-}
 
-@synthesize drawingAttributes;
-
+@synthesize mDataSource;
 /*
  * The dataSource provides LMHexCell objects to the view, referenced by column+row,
  * on demand.
  */
-- (id<LMHoneycombMatrix>)dataSource {
-  return dataSource;
-}
 
-- (void)setDataSource:(id<LMHoneycombMatrix>)_dataSource {
-  dataSource = _dataSource;
+- (void)setDataSource:(id<LMHoneycombMatrix>)dataSource {
+  mDataSource = dataSource;
   [self dataSourceChanged];
 }
+
 
 /*
  * If the dataSource has changed (e.g. number of cells) it can force the view to regenerate
  */
 - (void)dataSourceChanged {
-  cols = [dataSource hexColumns];
-  rows = [dataSource hexRows];
-  firstDrawing = YES;
+  mCols     = [[self dataSource] hexColumns];
+  mRows     = [[self dataSource] hexRows];
+  mSelected = nil;
+  
+  [self setRecalculateCellPaths:YES];
   [self setNeedsDisplay:YES];
 }
 
+
+#pragma mark Drawing color pseudo-properties
+
 - (NSColor *)defaultColor {
-  return [drawingAttributes objectForKey:LMHoneycombViewDefaultColor];
+  return [[self drawingAttributes] objectForKey:LMHoneycombViewDefaultColor];
 }
 
-- (void)setDefaultColor:(NSColor *)_defaultColor {
-  [drawingAttributes setObject:_defaultColor forKey:LMHoneycombViewDefaultColor];
+- (void)setDefaultColor:(NSColor *)defaultColor {
+  [[self drawingAttributes] setObject:defaultColor forKey:LMHoneycombViewDefaultColor];
 }
 
 - (NSColor *)selectedColor {
-  return [drawingAttributes objectForKey:LMHoneycombViewSelectedColor];
+  return [[self drawingAttributes] objectForKey:LMHoneycombViewSelectedColor];
 }
 
-- (void)setSelectedColor:(NSColor *)_selectedColor {
-  [drawingAttributes setObject:_selectedColor forKey:LMHoneycombViewSelectedColor];
+- (void)setSelectedColor:(NSColor *)selectedColor {
+  [[self drawingAttributes] setObject:selectedColor forKey:LMHoneycombViewSelectedColor];
 }
 
 - (NSColor *)borderColor {
-  return [drawingAttributes objectForKey:LMHoneycombViewBorderColor];
+  return [[self drawingAttributes] objectForKey:LMHoneycombViewBorderColor];
 }
 
-- (void)setBorderColor:(NSColor *)_borderColor {
-  [drawingAttributes setObject:_borderColor forKey:LMHoneycombViewBorderColor];
+- (void)setBorderColor:(NSColor *)borderColor {
+  [[self drawingAttributes] setObject:borderColor forKey:LMHoneycombViewBorderColor];
 }
 
 - (NSColor *)selectedBorderColor {
-  return [drawingAttributes objectForKey:LMHoneycombViewSelectedBorderColor];
+  return [[self drawingAttributes] objectForKey:LMHoneycombViewSelectedBorderColor];
 }
 
-- (void)setSelectedBorderColor:(NSColor *)_selectedBorderColor_ {
-  [drawingAttributes setObject:_selectedBorderColor_ forKey:LMHoneycombViewSelectedBorderColor];  
+- (void)setSelectedBorderColor:(NSColor *)selectedBorderColor {
+  [[self drawingAttributes] setObject:selectedBorderColor forKey:LMHoneycombViewSelectedBorderColor];
 }
 
 - (CGFloat)borderWidth {
-  return [[drawingAttributes objectForKey:LMHoneycombViewBorderWidth] floatValue];
+  return [[[self drawingAttributes] objectForKey:LMHoneycombViewBorderWidth] floatValue];
 }
 
-- (void)setBorderWidth:(CGFloat)_borderWidth {
-  [drawingAttributes setObject:[NSNumber numberWithFloat:_borderWidth] forKey:LMHoneycombViewBorderWidth];
+- (void)setBorderWidth:(CGFloat)borderWidth {
+  [[self drawingAttributes] setObject:[NSNumber numberWithFloat:borderWidth] forKey:LMHoneycombViewBorderWidth];
 }
 
-// Drawing code
+
+#pragma mark Drawing support
 
 /*
  * Calculation of the hex radius is complicated by the interlocking
@@ -128,24 +152,28 @@ NSString* const LMHoneycombViewBorderWidth = @"border.width";
  * r = 2w / 3(cols+1)
  */
 - (CGFloat)hexRadius {
-  return ( 2 * [self bounds].size.width ) / ( 3 * ( cols + 1 ) );
+  return ( 2 * [self bounds].size.width ) / ( 3 * ( [self cols] + 1 ) );
 }
+
 
 /*
  * We draw the hex using points on a circle, therefore we need to understand
  * how far offset the centre of the first hex is from the edge of the view.
  */
-- (CGFloat)hexOffset:(CGFloat)_radius {
-  return ( 3 * _radius ) / 2;
+- (CGFloat)hexOffset:(CGFloat)radius {
+  return ( 3 * radius ) / 2;
 }
 
-- (CGFloat)hexHeight:(CGFloat)_radius {
-  return 2 * sqrt( 0.75 * pow( _radius, 2 ) );
+
+- (CGFloat)hexHeight:(CGFloat)radius {
+  return 2 * sqrt( 0.75 * pow( radius, 2 ) );
 }
 
-- (CGFloat)idealHeight:(CGFloat)_radius {
-  return [self hexOffset:_radius] + ( rows * [self hexHeight:_radius] );
+
+- (CGFloat)idealHeight:(CGFloat)radius {
+  return [self hexOffset:radius] + ( [self rows] * [self hexHeight:radius] );
 }
+
 
 - (CGFloat)layerAspectRatio {
   CGFloat radius = [self hexRadius];
@@ -155,87 +183,64 @@ NSString* const LMHoneycombViewBorderWidth = @"border.width";
   return ar;
 }
 
-- (void)calculateCellPaths:(NSRect)__bounds {
+
+- (void)calculateCellPaths:(NSRect)bounds {
   NSPoint hexCentre;
   
   CGFloat radius = [self hexRadius];
   CGFloat offset = [self hexOffset:radius];
   CGFloat height = [self hexHeight:radius];
   
-  for( int col = 0; col < cols; col++ ) {
-    for( int row = 0; row < rows; row ++ ) {
+  for( int col = 0; col < [self cols]; col++ ) {
+    for( int row = 0; row < [self rows]; row ++ ) {
       hexCentre = NSMakePoint(
                     ( col + 1 ) * offset,
                     offset + (row * height) + ( ( col % 2 ) * ( height / 2 ) )
                     );
       
-      [[dataSource hexCellAtColumn:col row:row] setHexCentre:hexCentre radius:radius];
+      [[[self dataSource] hexCellAtColumn:col row:row] setHexCentre:hexCentre radius:radius];
     }
   }
 }
 
-- (void)drawRect:(NSRect)rect {
-  NSMutableDictionary *currentDrawingAttributes = [NSMutableDictionary dictionary];
-  
-  if( firstDrawing ) {
-    [self calculateCellPaths:[self bounds]];
-    firstDrawing = NO;
-  }
-  
+
+- (void)drawCells:(NSMutableDictionary *)currentDrawingAttributes {
   LMHexCell *cell;
-  for( int col = 0; col < cols; col++ ) {
-    for( int row = 0; row < rows; row++ ) {
-      cell = [dataSource hexCellAtColumn:col row:row];
-      if( cell != selected ) {
-        [currentDrawingAttributes setDictionary:drawingAttributes];
+  for( int col = 0; col < [self cols]; col++ ) {
+    for( int row = 0; row < [self rows]; row++ ) {
+      cell = [[self dataSource] hexCellAtColumn:col row:row];
+      if( cell != [self selected] ) {
+        [currentDrawingAttributes setDictionary:[self drawingAttributes]];
         [cell drawOnHoneycombView:self withAttributes:currentDrawingAttributes];
       }
     }
   }
-  
-  [currentDrawingAttributes setDictionary:drawingAttributes];
-  [selected drawOnHoneycombView:self withAttributes:currentDrawingAttributes];
 }
 
-- (LMHexCell *)findCellAtPoint:(NSPoint)_point {
-  // Find the Bezier containing this click
-  for( int col = 0; col < cols; col++ ) {
-    for( int row = 0; row < rows; row++ ) {
-      LMHexCell *cell = [dataSource hexCellAtColumn:col row:row];
-      if( [[cell path] containsPoint:_point] ) {
-        return cell;
-      }
-    }
+
+- (void)drawRect:(NSRect)rect {
+  NSMutableDictionary *currentDrawingAttributes = [NSMutableDictionary dictionary];
+  
+  if( [self recalculateCellPaths] ) {
+    [self calculateCellPaths:[self bounds]];
+    [self setRecalculateCellPaths:NO];
   }
   
-  return nil;
+  [self drawCells:currentDrawingAttributes];
+  [currentDrawingAttributes setDictionary:[self drawingAttributes]];
+  [[self selected] drawOnHoneycombView:self withAttributes:currentDrawingAttributes];
 }
 
-// Selection handling
 
-- (LMHexCell *)selected {
-  return selected;
+#pragma mark Event handling
+
+- (void)mouseDown:(NSEvent *)event {
+  [self setSelected:[self findCellAtPoint:[self convertPoint:[event locationInWindow] fromView:nil]]];
 }
 
-- (void)setSelected:(LMHexCell *)_selected_ {
-  [selected setSelected:NO];
-  selected = _selected_;
-  [selected setSelected:YES];
-  
-  [dataSource hexCellSelected:selected];
-  if( [delegate respondsToSelector:@selector(honeycombView:hexCellSelected:)] ) {
-    [delegate honeycombView:self hexCellSelected:selected];
-  }
-  
-  [self setNeedsDisplay:YES];
-}
 
-- (void)mouseDown:(NSEvent *)_event_ {
-  [self setSelected:[self findCellAtPoint:[self convertPoint:[_event_ locationInWindow] fromView:nil]]];
-}
-
-- (void)rightMouseDown:(NSEvent *)_event_ {
-  NSPoint point = [self convertPoint:[_event_ locationInWindow] fromView:nil];
+- (void)rightMouseDown:(NSEvent *)event {
+  NSPoint point = [self convertPoint:[event locationInWindow] fromView:nil];
   
   NSMenu *contextMenu = [[self findCellAtPoint:point] contextMenu];
   if( contextMenu ) {
@@ -247,15 +252,31 @@ NSString* const LMHoneycombViewBorderWidth = @"border.width";
   }
 }
 
-// Notifications
 
-- (void)windowResized:(NSNotification *)notification;
-{
-  [self calculateCellPaths:[self bounds]];
+- (LMHexCell *)findCellAtPoint:(NSPoint)point {
+  // Find the Bezier containing this click
+  for( int col = 0; col < [self cols]; col++ ) {
+    for( int row = 0; row < [self rows]; row++ ) {
+      LMHexCell *cell = [[self dataSource] hexCellAtColumn:col row:row];
+      if( [[cell path] containsPoint:point] ) {
+        return cell;
+      }
+    }
+  }
+  
+  return nil;
+}
+
+
+#pragma mark Notifications
+
+- (void)windowResized:(NSNotification *)notification {
+  [self setRecalculateCellPaths:YES];
   [self setNeedsDisplay:YES];
 }
 
-// View methods
+
+#pragma mark NSView overrides
 
 - (void)viewDidMoveToWindow {
   [[NSNotificationCenter defaultCenter] addObserver:self

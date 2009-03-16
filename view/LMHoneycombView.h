@@ -19,30 +19,30 @@ extern NSString* const LMHoneycombViewSelectedBorderColor;
 extern NSString* const LMHoneycombViewBorderWidth;
 
 @interface LMHoneycombView : NSView {
-  LMHexCell             *selected;
+  LMHexCell             *mSelected;
   
-  id<LMHoneycombMatrix> dataSource;
-  id                    delegate;
+  id<LMHoneycombMatrix> mDataSource;
+  id                    mDelegate;
   
-  int                   cols;
-  int                   rows;
+  int                   mCols;
+  int                   mRows;
   
-  BOOL                  firstDrawing;
+  BOOL                  mRecalculateCellPaths;
   
-  NSMutableDictionary   *drawingAttributes;
+  NSBitmapImageRep      *mViewCache;
+  
+  NSMutableDictionary   *mDrawingAttributes;
 }
 
-@property (readonly) NSMutableDictionary *drawingAttributes;
+@property (readonly,getter=drawingAttributes) NSMutableDictionary *mDrawingAttributes;
+@property (readonly,getter=cols) int mCols;
+@property (readonly,getter=rows) int mRows;
+@property (getter=delegate,setter=setDelegate:) id mDelegate;
+@property (getter=recalculateCellPaths,setter=setRecalculateCellPaths:) BOOL mRecalculateCellPaths;
+@property (getter=selected,setter=setSelected:) LMHexCell *mSelected;
+@property (getter=dataSource,setter=setDataSource:) id<LMHoneycombMatrix> mDataSource;
 
-- (id)delegate;
-- (void)setDelegate:(id)delegate;
-
-- (id<LMHoneycombMatrix>)dataSource;
-- (void)setDataSource:(id<LMHoneycombMatrix>)dataSource;
 - (void)dataSourceChanged;
-
-- (LMHexCell *)selected;
-- (void)setSelected:(LMHexCell *)selected;
 
 - (CGFloat)hexRadius;
 - (CGFloat)hexOffset:(CGFloat)radius;

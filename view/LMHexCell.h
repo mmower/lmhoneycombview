@@ -11,35 +11,30 @@
 @class LMHoneycombView;
 
 @interface LMHexCell : NSObject {
-  NSPoint             centre;
-  CGFloat             radius;
-  NSBezierPath        *path;
-  int                 col;
-  int                 row;
-  id                  data;
-  BOOL                selected;
+  NSPoint             mCentre;
+  CGFloat             mRadius;
+  NSBezierPath        *mPath;
+  int                 mCol;
+  int                 mRow;
+  id                  mData;
+  BOOL                mSelected;
+  BOOL                mDirty;
 }
 
 - (id)initWithColumn:(int)col row:(int)row;
 - (id)initWithColumn:(int)col row:(int)row data:(id)data;
 
-- (NSBezierPath *)path;
+@property (readonly,getter=centre) NSPoint mCentre;
+@property (readonly,getter=radius) CGFloat mRadius;
+@property (readonly,getter=path) NSBezierPath *mPath;
+@property (readonly,getter=col) int mCol;
+@property (readonly,getter=row) int mRow;
+@property (getter=data,setter=setData:) id mData;
+@property (getter=selected,setter=setSelected:) BOOL mSelected;
+@property (getter=dirty,setter=setDirty:) BOOL mDirty;
+
 - (void)setHexCentre:(NSPoint)centre radius:(CGFloat)radius;
-
-- (NSPoint)centre;
-- (CGFloat)radius;
-
-- (id)data;
-- (void)setData:(id)data;
-
-- (int)column;
-- (int)row;
-
-- (BOOL)selected;
-- (void)setSelected:(BOOL)selected;
-
 - (void)drawOnHoneycombView:(LMHoneycombView *)view withAttributes:(NSMutableDictionary *)attributes;
-
 - (NSMenu *)contextMenu;
 
 @end

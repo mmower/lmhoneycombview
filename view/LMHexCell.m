@@ -14,85 +14,76 @@
 
 @implementation LMHexCell
 
-- (id)initWithColumn:(int)_col row:(int)_row {
-  return [self initWithColumn:_col row:_row data:nil];
+#pragma mark Initializers
+
+- (id)initWithColumn:(int)col row:(int)row {
+  return [self initWithColumn:col row:row data:nil];
 }
 
-- (id)initWithColumn:(int)_col row:(int)_row data:(id)_data {
+- (id)initWithColumn:(int)col row:(int)row data:(id)data {
   if( self = [super init] ) {
-    path          = nil;
-    col           = _col;
-    row           = _row;
-    data          = _data;
-    selected      = NO;
+    mPath     = nil;
+    mCol      = col;
+    mRow      = row;
+    mData     = data;
+    mSelected = NO;
+    mDirty    = YES;
   }
   
   return self;
 }
 
-- (NSBezierPath *)path {
-  return path;
+#pragma mark Properties
+
+@synthesize mCentre;
+@synthesize mRadius;
+@synthesize mPath;
+@synthesize mCol;
+@synthesize mRow;
+@synthesize mData;
+@synthesize mSelected;
+
+- (void)setSelected:(BOOL)selected {
+  mSelected = selected;
+  [self setDirty:YES];
 }
 
-- (void)setHexCentre:(NSPoint)_centre radius:(CGFloat)_radius {
-  centre = _centre;
-  radius = _radius;
+@synthesize mDirty;
+
+- (void)setHexCentre:(NSPoint)centre radius:(CGFloat)radius {
+  mCentre = centre;
+  mRadius = radius;
   
-  path = [NSBezierPath bezierPath];
-  [path appendHexagonWithCentre:_centre radius:_radius];
+  mPath = [NSBezierPath bezierPath];
+  [mPath appendHexagonWithCentre:centre radius:radius];
+  [self setDirty:YES];
 }
 
-- (NSPoint)centre {
-  return centre;
-}
 
-- (CGFloat)radius {
-  return radius;
-}
-
-- (int)column {
-  return col;
-}
-
-- (int)row {
-  return row;
-}
-
-- (BOOL)selected {
-  return selected;
-}
-
-- (void)setSelected:(BOOL)_selected {
-  selected = _selected;
-}
-
-- (id)data {
-  return data;
-}
-
-- (void)setData:(id)_data {
-  data = _data;
-}
-
-- (void)drawOnHoneycombView:(LMHoneycombView *)_view withAttributes:(NSMutableDictionary *)_attributes {
-  if( selected ) {
-    [[_attributes objectForKey:LMHoneycombViewSelectedColor] set];
+- (void)drawOnHoneycombView:(LMHoneycombView *)view withAttributes:(NSMutableDictionary *)attributes {
+  if( [self selected] ) {
+    [[attributes objectForKey:LMHoneycombViewSelectedColor] set];
   } else {
-    [[_attributes objectForKey:LMHoneycombViewDefaultColor] set];
+    [[attributes objectForKey:LMHoneycombViewDefaultColor] set];
   }
-  [path fill];
+  [[self path] fill];
   
-  if( selected ) {
-    [[_attributes objectForKey:LMHoneycombViewSelectedBorderColor] set];
+  if( [self selected] ) {
+    [[attributes objectForKey:LMHoneycombViewSelectedBorderColor] set];
   } else {
-    [[_attributes objectForKey:LMHoneycombViewBorderColor] set];
+    [[attributes objectForKey:LMHoneycombViewBorderColor] set];
   }
-  [path setLineWidth:[[_attributes objectForKey:LMHoneycombViewBorderWidth] floatValue]];
-  [path stroke];
+  
+  [[self path] setLineWidth:[[attributes objectForKey:LMHoneycombViewBorderWidth] floatValue]];
+  [[self path] stroke];
+  
+  [self setDirty:NO];
 }
+
 
 - (NSMenu *)contextMenu {
   return nil;
 }
+
 
 @end
